@@ -1,40 +1,92 @@
-Tonight + Tomorrow Morning Checklist
-0%
-Tonight
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tonight + Tomorrow Morning Checklist</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#4CAF50">
+<style>
+body { font-family: 'Roboto', sans-serif; background: #f5f5f5; margin:0; padding:0; }
+header { background:#4CAF50; color:white; text-align:center; padding:25px 0; font-size:1.9em; font-weight:bold;}
+.container {padding:20px;}
+h2,h3 {color:white; padding:12px; border-radius:8px; margin-top:30px; font-size:1.2em;}
+h2{background:#673AB7;} h3{background:#FF9800;}
+.task {background:white; margin:12px 0; padding:18px; border-radius:12px; display:flex; align-items:center; font-size:1.1em; box-shadow:0 3px 6px rgba(0,0,0,0.12);}
+.task input[type="checkbox"] {margin-right:18px; transform:scale(1.6); cursor:pointer;}
+#progress-container {background:#ddd; border-radius:12px; margin:25px 0; height:30px; width:100%;}
+#progress-bar {background:#4CAF50; height:100%; width:0%; border-radius:12px; text-align:center; color:white; line-height:30px; font-weight:bold; transition:width 0.3s ease;}
+#reset-btn {background:#FF5252; color:white; border:none; padding:15px 25px; border-radius:10px; font-size:1.1em; cursor:pointer; margin-top:25px; width:100%;}
+#reset-btn:hover {background:#FF1744;}
+</style>
+</head>
+<body>
+<header>Tonight + Tomorrow Morning Checklist</header>
+<div class="container">
+    <div id="progress-container">
+        <div id="progress-bar">0%</div>
+    </div>
 
-💧 Drink chia water / water + lime
+    <h2>Tonight</h2>
+    <div class="task"><input type="checkbox" class="task-checkbox" id="task1">💧 Drink chia water / water + lime</div>
+    <div class="task"><input type="checkbox" class="task-checkbox" id="task2">💊 Take 5g creatine</div>
+    <div class="task"><input type="checkbox" class="task-checkbox" id="task3">❌ No cigarettes</div>
+    <div class="task"><input type="checkbox" class="task-checkbox" id="task4">📱 Phone across room, Sleep Focus ON</div>
+    <div class="task"><input type="checkbox" class="task-checkbox" id="task5">🏋️ Workout: Arms / Back / Core</div>
+    <div class="task"><input type="checkbox" class="task-checkbox" id="task6">💧 Drink water or tea after workout</div>
+    <div class="task"><input type="checkbox" class="task-checkbox" id="task7">🤸 Stretch 2–3 minutes</div>
+    <div class="task"><input type="checkbox" class="task-checkbox" id="task8">🔥 Replace cravings: Push-ups / Wall-sits / Mint Gum</div>
+    <div class="task"><input type="checkbox" class="task-checkbox" id="task9">🚿 Shower 15–30 min after workout</div>
+    <div class="task"><input type="checkbox" class="task-checkbox" id="task10">📱 Phone across room, Dim lights, Sleep Focus ON</div>
 
-💊 Take 5g creatine
+    <h3>Tomorrow Morning</h3>
+    <div class="task"><input type="checkbox" class="task-checkbox" id="task11">⏰ 7:00 Alarm 1 – Loud</div>
+    <div class="task"><input type="checkbox" class="task-checkbox" id="task12">⏰ 7:05 Alarmy – Math / Selfie Challenge</div>
+    <div class="task"><input type="checkbox" class="task-checkbox" id="task13">⏰ 7:15 Alarm 3 – Backup</div>
+    <div class="task"><input type="checkbox" class="task-checkbox" id="task14">💧 Drink water / tea</div>
+    <div class="task"><input type="checkbox" class="task-checkbox" id="task15">🤸 Quick Stretch 1–2 min / Push-ups</div>
+    <div class="task"><input type="checkbox" class="task-checkbox" id="task16">🔥 Replace cravings: Water, Mint, Push-ups</div>
+    <div class="task"><input type="checkbox" class="task-checkbox" id="task17">📱 Check only essential messages</div>
+    <div class="task"><input type="checkbox" class="task-checkbox" id="task18">⏳ No scrolling 30–60 min</div>
 
-❌ No cigarettes
+    <button id="reset-btn">Reset Checklist</button>
+</div>
 
-📱 Phone across room, Sleep Focus ON
+<script>
+const checkboxes = document.querySelectorAll('.task-checkbox');
+const progressBar = document.getElementById('progress-bar');
+const resetBtn = document.getElementById('reset-btn');
 
-🏋️ Workout: Arms / Back / Core
+// Load saved state from localStorage
+checkboxes.forEach(cb => {
+    const saved = localStorage.getItem(cb.id);
+    if (saved === 'true') cb.checked = true;
+    cb.addEventListener('change', () => {
+        localStorage.setItem(cb.id, cb.checked);
+        updateProgress();
+    });
+});
 
-💧 Drink water or tea after workout
+function updateProgress() {
+    const total = checkboxes.length;
+    const checked = document.querySelectorAll('.task-checkbox:checked').length;
+    const percent = Math.round((checked / total) * 100);
+    progressBar.style.width = percent + '%';
+    progressBar.textContent = percent + '%';
+}
 
-🤸 Stretch 2–3 minutes
+// Reset all tasks
+resetBtn.addEventListener('click', () => {
+    checkboxes.forEach(cb => {
+        cb.checked = false;
+        localStorage.setItem(cb.id, false);
+    });
+    updateProgress();
+});
 
-🔥 Replace cravings: Push-ups / Wall-sits / Mint Gum
-
-🚿 Shower 15–30 min after workout
-
-📱 Phone across room, Dim lights, Sleep Focus ON
-Tomorrow Morning
-
-⏰ 7:00 Alarm 1 – Loud
-
-⏰ 7:05 Alarmy – Math / Selfie Challenge
-
-⏰ 7:15 Alarm 3 – Backup
-
-💧 Drink water / tea
-
-🤸 Quick Stretch 1–2 min / Push-ups
-
-🔥 Replace cravings: Water, Mint, Push-ups
-
-📱 Check only essential messages
-
-⏳ No scrolling 30–60 min Reset Checklist
+// Initialize progress bar
+updateProgress();
+</script>
+</body>
+</html>
